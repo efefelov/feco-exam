@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Демо-трек: ЕГЭ математика (профиль) — задачи на проценты</title>
+<style>
+:root{
+  --bg:#0f1117; --panel:#171a23; --panel2:#1d2130; --border:#2a2f42;
+  --text:#e8eaf2; --muted:#9aa0b5; --accent:#4f8cff; --accent2:#8b5cf6;
+  --green:#34c77b; --red:#ef5b6e; --yellow:#f0b429; --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px}
+header{padding:26px 0 10px}
+h1{font-size:22px;font-weight:600}
+h3{font-size:17px;margin-bottom:8px;font-weight:600}
+.sub{color:var(--muted);margin-top:6px;font-size:14px}
+.badge-demo{display:inline-block;font-size:11px;padding:3px 10px;border-radius:99px;background:rgba(240,180,41,.15);color:var(--yellow);margin-top:8px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 8px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:10}
+.tab{background:var(--panel);border:1px solid var(--border);color:var(--text);padding:9px 16px;border-radius:99px;cursor:pointer;font-size:14px;transition:.15s}
+.tab:hover{border-color:var(--accent)}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.view{display:none}
+.view.active{display:block}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin:12px 0}
+.muted{color:var(--muted);font-size:13px}
+ul,ol{margin:8px 0 8px 20px}
+li{margin:5px 0}
+b{color:#fff}
+.callout{border-left:3px solid var(--accent);background:var(--panel2);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0;font-size:14px}
+.callout.gold{border-color:var(--yellow)}
+.callout.green{border-color:var(--green)}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+th{text-align:left;color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--border)}
+.q{margin:14px 0;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel)}
+.qq{font-weight:600;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:10px;margin:6px 0;cursor:pointer;font-size:14px}
+.opt:hover{border-color:var(--accent)}
+.opt.sel{border-color:var(--accent);background:rgba(79,140,255,.12)}
+.opt.correct{border-color:var(--green);background:rgba(52,199,123,.15)}
+.opt.wrong{border-color:var(--red);background:rgba(239,91,110,.15)}
+.expl{display:none;margin-top:10px;font-size:13px;color:var(--muted);border-top:1px dashed var(--border);padding-top:8px}
+.expl.show{display:block}
+.score{display:none;margin-top:12px;padding:12px;border-radius:10px;font-weight:600}
+.score.show{display:block}
+.score.pass{background:rgba(52,199,123,.15);color:var(--green)}
+.score.fail{background:rgba(239,91,110,.15);color:var(--red)}
+button.act{background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:10px;cursor:pointer;font-size:14px;margin:4px 6px 4px 0}
+button.act:hover{filter:brightness(1.12)}
+button.act.sec{background:var(--panel2);border:1px solid var(--border);color:var(--text)}
+.streak{font-size:14px;margin-top:8px}
+.streak b{color:var(--green)}
+.trainer-ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin:10px 0}
+.trainer-ctl label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+select{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:14px}
+.step{margin:6px 0;padding-left:12px;border-left:2px solid var(--border)}
+.formula{background:var(--panel2);border-radius:8px;padding:8px 12px;font-family:Consolas,monospace;font-size:14px;margin:6px 0;display:inline-block}
+.err td{color:var(--red)}
+.big-res{font-size:24px;font-weight:600;margin:8px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>🎓 Трек «ЕГЭ математика (профиль): задачи на проценты»</h1>
+  <div class="sub">Диагностика → разбор → тренажёр с бесконечными вариантами → мини-экзамен. Для учеников — самоподготовка за 490 ₽. Для репетиторов — помощник, который находит слабые места и слепые зоны ученика.</div>
+  <span class="badge-demo">Задания — собственные аналоги типов открытого банка ФИПИ (не копии КИМов)</span>
+</header>
+<div class="tabs">
+  <button class="tab active" data-view="diag">🧪 Диагностика</button>
+  <button class="tab" data-view="theory">📘 Разбор</button>
+  <button class="tab" data-view="trainer">♾️ Тренажёр</button>
+  <button class="tab" data-view="exam">🎓 Мини-экзамен</button>
+  <button class="tab" data-view="tutor">💼 Репетитору</button>
+</div>
+
+<div class="view active" id="view-diag"></div>
+<div class="view" id="view-theory"></div>
+<div class="view" id="view-trainer"></div>
+<div class="view" id="view-exam"></div>
+<div class="view" id="view-tutor"></div>
+</div>
+
+<script>
+/* ====== ДИАГНОСТИКА: 5 проверенных задач ====== */
+const DIAG = [
+ {q:'Куртка стоила 4 800 ₽. Цену снизили на 25%. Сколько стала стоить куртка?',
+  o:['3 600 ₽','2 400 ₽','3 800 ₽','1 200 ₽'],c:0,
+  e:'Снижение на 25% = новая цена 75% от старой: 4 800 × 0,75 = 3 600 ₽. Ошибка 2 400 ₽ — вычли «25% от новой цены» вместо старой.'},
+ {q:'Цену на телефон повысили на 20%, а потом снизили на 20%. Как изменилась цена в итоге?',
+  o:['Цена не изменилась','Снизилась на 4%','Выросла на 4%','Снизилась на 20%'],c:1,
+  e:'Изменения не симметричны: 1,2 × 0,8 = 0,96 — цена стала 96% от исходной, то есть снизилась на 4%. Ловушка задания: интуиция говорит «не изменилась».'},
+ {q:'Вклад 50 000 ₽ под 10% годовых на 2 года с капитализацией (проценты прибавляются к вкладу). Сколько будет на счёте?',
+  o:['60 500 ₽','60 000 ₽','55 000 ₽','61 000 ₽'],c:0,
+  e:'С капитализацией каждый год считаем от растущей суммы: 50 000 × 1,1² = 60 500 ₽. Ошибка 60 000 ₽ — «простые проценты» без капитализации.'},
+ {q:'Смешали 3 кг 10%-го раствора и 2 кг 25%-го раствора. Какая концентрация получилась?',
+  o:['16%','17,5%','15%','35%'],c:0,
+  e:'Вещество: 3×0,10 + 2×0,25 = 0,8 кг; масса: 5 кг. Концентрация = 0,8/5 = 16%. Ловушка 17,5% — среднее арифметическое долей (работает только при равных массах).'},
+ {q:'Акция: при покупке двух футболок третья — бесплатно. Одна футболка стоит 900 ₽. Сколько процентов составляет экономия от полной стоимости трёх футболок?',
+  o:['≈33%','25%','50%','30%'],c:0,
+  e:'Платим 1 800 ₽ за то, что без акции стоило бы 2 700 ₽. Экономия = 900/2 700 = 33,3% ≈ 33%. Ловушка 50% — «третья бесплатно» на первый взгляд «половина», но платим за 2 из 3.'}
+];
+
+/* ====== ГЕНЕРАТОРЫ (параметризация) ====== */
+function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function fmt(n){return Math.round(n).toLocaleString('ru-RU');}
+function genA(){ // простое изменение цены
+  const X=rnd([1200,1800,2400,3000,3600,4800,6000,8000]);
+  const p=rnd([10,15,20,25,30,50]);
+  const up=Math.random()<0.5;
+  const dir=up?'подорожал':'подешевел';
+  const ans=Math.round(X*(up?1+p/100:1-p/100));
+  const dp=Math.round(X*p/100);
+  const cand=[ans, dp, Math.round(X*(up?1-p/100:1+p/100)), up?X+p:X-p, Math.round(ans+dp/2), Math.round(ans-dp/2), Math.round(ans*1.1)];
+  const uniq=[...new Set(cand)].filter(v=>v>0).slice(0,4);
+  return {q:`Товар стоил ${fmt(X)} ₽, затем ${dir} на ${p}%. Какова новая цена (в рублях)?`,
+    o:uniq.map(fmt), c:uniq.indexOf(ans),
+    e:`Изменение цены: ${fmt(X)} ${up?'×':'÷'} ${(1+p/100).toFixed(2)} — то есть новая цена это ${up?(100+p):(100-p)}% от старой. Ответ: ${fmt(ans)} ₽.`};
+}
+function genB(){ // два последовательных изменения — классическая ловушка
+  const a=rnd([10,15,20,25,30]);
+  let b=rnd([10,15,20,25,30]);
+  const r=(1-a/100)*(1+b/100)*100-100; // итоговое изменение в %
+  const correct=(r>=0?`Выросла на ${Math.round(r)}%`:`Снизилась на ${Math.abs(Math.round(r))}%`);
+  const cand=[
+    correct,
+    'Цена не изменилась',
+    (b-a>=0?`Выросла на ${b-a}%`:`Снизилась на ${a-b}%`),
+    `Выросла на ${a+b}%`
+  ];
+  const uniq=[...new Set(cand)];
+  // подстраховка: если вдруг совпало — заменяем 4-й
+  while(uniq.length<4) uniq.push(`Выросла на ${a+b+Math.round(r)+5}%`);
+  const four=uniq.slice(0,4);
+  return {q:`Цену сначала повысили на ${a}%, а потом снизили на ${b}%. Как в итоге изменилась цена?`,
+    o:four, c:four.indexOf(correct),
+    e:`Последовательные изменения перемножаются, а не складываются: ${(1-a/100).toFixed(2)} × ${(1+b/100).toFixed(2)} = ${((1-a/100)*(1+b/100)).toFixed(2)} — то есть ${r>=0?'+'+Math.round(r):Math.round(r)}% к исходной цене. Ответ: ${correct.toLowerCase()}.`};
+}
+function genC(){ // вклад с капитализацией
+  const X=rnd([10000,20000,50000,80000,100000]);
+  const p=rnd([5,8,10,12,15]);
+  const n=rnd([2,3]);
+  const ans=Math.round(X*Math.pow(1+p/100,n));
+  const simple=Math.round(X*(1+p*n/100));
+  const prev=Math.round(X*Math.pow(1+p/100,n-1));
+  const cand=[ans, simple, prev, X+p*n*100, Math.round(ans*1.07), Math.round(ans*0.94), Math.round(ans+prev)];
+  const uniq=[...new Set(cand)].filter(v=>v>0).slice(0,4);
+  return {q:`Вклад ${fmt(X)} ₽ размещён под ${p}% годовых на ${n} года с капитализацией (проценты прибавляются к вкладу в конце каждого года). Какая сумма будет на счёте?`,
+    o:uniq.map(fmt), c:uniq.indexOf(ans),
+    e:`Каждый год сумма умножается на ${(1+p/100).toFixed(2)}: ${fmt(X)} × ${(1+p/100).toFixed(2)}${n===3?` × ${(1+p/100).toFixed(2)}`:''} = ${fmt(ans)} ₽. Ошибка ${fmt(simple)} ₽ — простые проценты (без капитализации).`};
+}
+function genOne(type){return type==='A'?genA():type==='B'?genB():genC();}
+
+/* ====== РЕНДЕР ====== */
+const $=s=>document.querySelector(s);
+function esc(s){return s.replace(/"/g,'&quot;');}
+function quizBlock(q,qi){
+  return `<div class="q" data-qi="${qi}" data-c="${q.c}">
+    <p class="qq">${qi+1}. ${q.q}</p>
+    ${q.o.map((o,oi)=>`<button type="button" class="opt" onclick="pickOpt(this)">${esc(o)}</button>`).join('')}
+    <div class="expl">💡 ${q.e}</div>
+  </div>`;
+}
+window.pickOpt=function(btn){
+  const q=btn.closest('.q');
+  if(q.classList.contains('locked'))return;
+  q.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+  btn.classList.add('sel');
+};
+function checkAll(container,n){
+  const qs=document.querySelectorAll(container+' .q');
+  let right=0;
+  qs.forEach(q=>{
+    q.classList.add('locked');
+    const c=+q.dataset.c, opts=q.querySelectorAll('.opt'), sel=q.querySelector('.opt.sel');
+    opts[c].classList.add('correct');
+    if(sel){if(+[...opts].indexOf(sel)===c)right++;else sel.classList.add('wrong');}
+    q.querySelector('.expl').classList.add('show');
+  });
+  return right;
+}
+function scoreMsg(el,right,n,passN,pass,extra){
+  el.className='score show '+(pass?'pass':'fail');
+  el.textContent=`Результат: ${right} из ${n}. `+(pass?`Зачёт! ${extra}`:`Нужно ${passN}. Смотрите разборы ниже — и переходите в Тренажёр закреплять.`);
+}
+
+/* --- Диагностика --- */
+function renderDiag(){
+  $('#view-diag').innerHTML=`
+  <div class="card">
+    <h3>🧪 Диагностический тест: 5 задач</h3>
+    <div class="muted">5 минут. Цель — увидеть, какие ловушки срабатывают именно у вас. Отвечайте на все, затем «Проверить».</div>
+  </div>
+  <div class="card"><div id="quiz-diag">${DIAG.map((q,i)=>quizBlock(q,i)).join('')}</div>
+    <div class="score" id="score-diag"></div>
+    <button class="act" onclick="runDiag()">Проверить</button>
+    <button class="act sec" onclick="resetBlock('#quiz-diag','#score-diag')">Сбросить</button>
+  </div>`;
+}
+window.runDiag=function(){
+  const right=checkAll('#quiz-diag',DIAG.length);
+  scoreMsg($('#score-diag'),right,DIAG.length,4,right>=4,
+    right===5?'Уровень отличный — идите в Мини-экзамен подтверждать.':'Хорошая база! Слабые места смотрите в разборах — и закрепите в Тренажёре.');
+};
+window.resetBlock=function(qc,sc){
+  document.querySelectorAll(qc+' .q').forEach(q=>{
+    q.classList.remove('locked');
+    q.querySelectorAll('.opt').forEach(o=>o.className='opt');
+    q.querySelector('.expl').classList.remove('show');
+  });
+  document.querySelector(sc).className='score';
+};
+
+/* --- Разбор --- */
+function renderTheory(){
+  $('#view-theory').innerHTML=`
+  <div class="card">
+    <h3>📘 Три шага к любой задаче на проценты</h3>
+    <div class="step"><b>1. Переведите проценты в множитель.</b> «+25%» → ×1,25; «−25%» → ×0,75; «стало 40%» → ×0,4.</div>
+    <div class="step"><b>2. Спросите: от ЧЕГО проценты?</b> От старой цены, новой цены, всей партии — 90% ошибок живут здесь.</div>
+    <div class="step"><b>3. Последовательные изменения — перемножайте множители.</b> Не складывайте проценты: 1,2 × 0,8 ≠ 1.</div>
+    <div class="callout gold"><b>Шпаргалка множителей:</b> +5% → 1,05 · +10% → 1,1 · +20% → 1,2 · +25% → 1,25 · +50% → 1,5 · −10% → 0,9 · −20% → 0,8 · −25% → 0,75 · −50% → 0,5</div>
+  </div>
+  <div class="card">
+    <h3>Три типа задач из демо</h3>
+    <table>
+      <tr><th>Тип</th><th>Схема</th><th>Ловушка</th></tr>
+      <tr><td>Изменение цены</td><td>новая = старая × множитель</td><td>проценты «от новой цены» вместо старой</td></tr>
+      <tr><td>Два изменения подряд</td><td>перемножить оба множителя</td><td>«+20% и −20% = без изменений» — ложь, теряется 4%</td></tr>
+      <tr><td>Вклад / смеси</td><td>капитализация: множитель в степени лет; смесь: доля вещества от массы</td><td>простые проценты вместо сложных; среднее арифметическое долей</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Типичные ошибки (и как их лечит тренажёр)</h3>
+    <ul>
+      <li class="err"><b>+20% и −20% «взаимно уничтожаются»</b> — лечится только прогоном вариаций: мозг должен увидеть разницу на числах.</li>
+      <li class="err"><b>Путаница базы</b> («25% от чего?») — лечится вопросом-скриптом «от чего считаю?» перед каждым действием.</li>
+      <li class="err"><b>Простые проценты вместо капитализации</b> — лечится сравнением двух вариантов расчёта в разборе.</li>
+    </ul>
+    <div class="callout green">Именно поэтому в Тренажёре числа меняются при каждом прохождении: «выучить вариант» невозможно — растёт навык.</div>
+  </div>`;
+}
+
+/* --- Тренажёр --- */
+let curT=null, streak=0, best=+(localStorage.getItem('demo-egf-best')||0);
+function renderTrainer(){
+  $('#view-trainer').innerHTML=`
+  <div class="card">
+    <h3>♾️ Тренажёр: каждый раз — новые числа</h3>
+    <div class="muted">Выберите тип задач и решайте. После проверки — решение с подстановкой ваших чисел. Серия верных ответов сохраняется в браузере.</div>
+    <div class="trainer-ctl">
+      <div><label>Тип задач</label>
+        <select id="tr-type">
+          <option value="mix">Все типы</option>
+          <option value="A">Изменение цены</option>
+          <option value="B">Два изменения подряд</option>
+          <option value="C">Вклад с капитализацией</option>
+        </select>
+      </div>
+      <button class="act" onclick="newTask()">Новая задача</button>
+    </div>
+    <div class="streak" id="tr-streak"></div>
+    <div id="tr-box"></div>
+  </div>`;
+  renderStreak(); newTask();
+}
+function renderStreak(){
+  $('#tr-streak').innerHTML=`Серия верных ответов: <b>${streak}</b> · Лучший результат: <b>${best}</b>`;
+}
+window.newTask=function(){
+  const type=$('#tr-type').value;
+  const t=type==='mix'?genOne(rnd(['A','B','B','C'])):genOne(type);
+  curT=t;
+  $('#tr-box').innerHTML=`
+    <div class="q" style="margin-top:10px" data-c="${t.c}">
+      <p class="qq">${t.q}</p>
+      ${t.o.map((o,oi)=>`<button type="button" class="opt" onclick="pickOpt(this)">${esc(o)}</button>`).join('')}
+      <div class="expl">💡 ${t.e}</div>
+      <div id="tr-verdict" style="display:none;margin-top:10px;font-weight:600"></div>
+    </div>
+    <button class="act" onclick="checkTask()">Проверить</button>
+    <button class="act sec" onclick="newTask()">Дальше →</button>`;
+};
+window.checkTask=function(){
+  const box=$('#tr-box .q');
+  if(box.classList.contains('locked'))return;
+  box.classList.add('locked');
+  const c=+box.dataset.c, opts=box.querySelectorAll('.opt'), sel=box.querySelector('.opt.sel');
+  opts[c].classList.add('correct');
+  const v=$('#tr-verdict');
+  if(sel && +[...opts].indexOf(sel)===c){
+    streak++; if(streak>best){best=streak;localStorage.setItem('demo-egf-best',best);}
+    v.style.color='var(--green)'; v.textContent='✓ Верно!';
+  }else{
+    streak=0;
+    v.style.color='var(--red)';
+    v.textContent='✗ Мимо — читайте решение. Серия сброшена (это нормально: ошибки и есть обучение).';
+  }
+  box.querySelector('.expl').classList.add('show');
+  renderStreak();
+};
+
+/* --- Мини-экзамен --- */
+let examTasks=null;
+function renderExam(){
+  examTasks=[genA(),genB(),genB(),genC(),rnd([genA(),genB()])];
+  $('#view-exam').innerHTML=`
+  <div class="card">
+    <h3>🎓 Мини-экзамен: 5 задач с новыми числами</h3>
+    <div class="muted">Задачи генерируются заново при каждом входе — это проверка навыка, а не памяти. Порог зачёта — 4 из 5.</div>
+  </div>
+  <div class="card"><div id="quiz-exam">${examTasks.map((q,i)=>quizBlock(q,i)).join('')}</div>
+    <div class="score" id="score-exam"></div>
+    <div class="big-res" id="exam-res" aria-live="polite"></div>
+    <button class="act" onclick="runExam()">Проверить</button>
+    <button class="act sec" onclick="renderExam()">Новый вариант</button>
+  </div>`;
+}
+window.runExam=function(){
+  const right=checkAll('#quiz-exam',5);
+  const pass=right>=4;
+  scoreMsg($('#score-exam'),right,5,4,pass,'Тема «Проценты» закрыта — можно переносить на реальный экзамен.');
+  $('#exam-res').textContent=`Готовность к теме: ${Math.round(right/5*100)}%`;
+};
+
+/* --- Репетитору: помощник-диагност --- */
+function renderTutor(){
+  $('#view-tutor').innerHTML=`
+  <div class="card">
+    <h3>💼 Помощник, который видит то, что вы не успеваете</h3>
+    <div class="muted">У репетитора 1–1,5 часа на ученика. Слепые зоны («думал, что понимает проценты — а на контрольной все три ловушки сработали») обычно всплывают на экзамене. Этот трек находит их заранее и показывает вам — по пунктам, а не «мне кажется, надо подучить».</div>
+    <div class="callout"><b>Что вы получаете после одного прохождения учеником:</b>
+    <ul style="margin:6px 0 0 20px">
+      <li><b>Карта ловушек:</b> диагностика из 5 задач срабатывает по конкретным ошибкам — «путает базу», «складывает проценты вместо перемножения», «простые проценты вместо капитализации» — разбор каждой уже написан;</li>
+      <li><b>Данные тренажёра:</b> серия, рекорд и тип задач (изменение цены / два изменения / вклад) — видно, где ученик «плавает»;</li>
+      <li><b>Готовность к теме в %</b> по мини-экзамену: точка контроля до и после ваших занятий.</li>
+    </ul></div>
+  </div>
+  <div class="card">
+    <h3>Как встроить в свою практику</h3>
+    <ul>
+      <li><b>До курса:</b> ученик проходит диагностику — вы получаете карту слабых мест до первого занятия, план занятий строится по ней;</li>
+      <li><b>Между занятиями:</b> тренажёр с новыми числами вместо «решить варианты 12–15 из сборника» — навык, а не запоминание;</li>
+      <li><b>После темы:</b> мини-экзамен — и родителю видно объективное «80%», а не «кажется, готов»;</li>
+      <li><b>Домашнее чтение:</b> раздел «Разбор» — методика «3 шага» и шпаргалка множителей уже написаны за вас.</li>
+    </ul>
+    <div class="callout green">Вы остаёте за собой главное — живую работу со сложными задачами и мотивацией. Трек забирает рутину диагностики и тренировки — то, что вы обычно раздаёте «на дом».</div>
+  </div>
+  <div class="card">
+    <h3>Для учеников и родителей</h3>
+    <table>
+      <tr><th>Что</th><th>Сколько</th><th>Для сравнения</th></tr>
+      <tr><td>Трек одной темы</td><td><b>490 ₽ разово, навсегда</b></td><td>занятие с репетитором: 2 000–3 000 ₽</td></tr>
+      <tr><td>Подписка на все треки (в разработке)</td><td><b>299 ₽/мес</b></td><td>одно занятие в месяц у репетитора</td></tr>
+    </table>
+    <div class="muted">Качество разбора — уровня репетитора: каждая ошибка разобрана «почему», тренажёр проверяет понимание новыми числами, готовность — в процентах. Трек не заменяет учителя — он делает самоподготовку настоящей.</div>
+  </div>
+  <div class="card">
+    <h3>Сборка трека по вашей теме</h3>
+    <ul>
+      <li>Ваш предмет и ваши задачи — из ваших же материалов, методичек и сборников;</li>
+      <li>Генераторы вариаций (как здесь) для задач, где числа можно менять;</li>
+      <li>Кабинет с прогрессом группы: кто что прошёл, где застрял;</li>
+      <li>Ваш бренд и логотип — программа выглядит как ваша система.</li>
+    </ul>
+    <div class="callout"><b>Формат и цены сборки:</b> трек по одной теме — 15 000–25 000 ₽, программа по курсу — 25 000–45 000 ₽, сопровождение — от 5 000 ₽/мес. Собирается за 1–2 недели из ваших материалов.</div>
+  </div>
+  <div class="card">
+    <h3>Юридическая аккуратность</h3>
+    <div class="muted">Задания этого трека — собственные аналоги типов открытого банка ФИПИ, реальные КИМы не используются. В вашей сборке — то же правило: открытые источники и ваши материалы.</div>
+  </div>`;
+}
+
+/* --- Tabs --- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    t.classList.add('active');
+    $('#view-'+t.dataset.view).classList.add('active');
+    window.scrollTo(0,0);
+  });
+});
+
+renderDiag();renderTheory();renderTrainer();renderExam();renderTutor();
+</script>
+</body>
+</html>
