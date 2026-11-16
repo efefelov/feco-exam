@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Демо-трек: ЕГЭ математика (профиль) — задачи на проценты</title>
+<title>Трек: ЕГЭ математика (профиль) — задачи на проценты</title>
 <style>
 :root{
   --bg:#0f1117; --panel:#171a23; --panel2:#1d2130; --border:#2a2f42;
@@ -60,6 +60,8 @@ select{background:var(--panel2);border:1px solid var(--border);color:var(--text)
 .formula{background:var(--panel2);border-radius:8px;padding:8px 12px;font-family:Consolas,monospace;font-size:14px;margin:6px 0;display:inline-block}
 .err td{color:var(--red)}
 .big-res{font-size:24px;font-weight:600;margin:8px 0}
+.code-input{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:14px;width:240px;margin:6px 6px 6px 0}
+.pay-note{margin-top:8px;font-size:13px}
 </style>
 </head>
 <body>
@@ -153,6 +155,42 @@ function genC(){ // вклад с капитализацией
     e:`Каждый год сумма умножается на ${(1+p/100).toFixed(2)}: ${fmt(X)} × ${(1+p/100).toFixed(2)}${n===3?` × ${(1+p/100).toFixed(2)}`:''} = ${fmt(ans)} ₽. Ошибка ${fmt(simple)} ₽ — простые проценты (без капитализации).`};
 }
 function genOne(type){return type==='A'?genA():type==='B'?genB():genC();}
+
+/* ====== ПЭЙВОЛ: трек 490 ₽ (код разблокировки, как в feco-prof) ====== */
+let UNLOCKED=false;
+try{UNLOCKED=localStorage.getItem('exam-unlocked')==='1';}catch(e){}
+const PAY_LINK='#'; // ← сюда подставить ссылку на оплату (Продамус/Т-Банк), v2
+const CODES=['EXAM-490-DEMO','FECO-EXAM-490'];
+const DEMO_TRAINER=3; // бесплатных задач тренажёра до оплаты
+let demoLeft=DEMO_TRAINER;
+try{demoLeft=DEMO_TRAINER-(+(localStorage.getItem('exam-demo-used')||0));}catch(e){}
+function payBlock(key){
+  return `<div class="card">
+    <h3>🔒 Полный доступ к треку — 490 ₽</h3>
+    <div class="muted">Разово, навсегда — дешевле одного занятия с репетитором (2 000–3 000 ₽). Тренажёр с бесконечными вариантами и мини-экзамен с «Готовностью к теме %».</div>
+    <div style="margin:12px 0"><button class="act" onclick="payClick()">Купить за 490 ₽</button></div>
+    <div><span class="muted">Уже оплатили? Введите код из письма:</span><br>
+      <input type="text" id="unlock-code-${key}" class="code-input" placeholder="XXXX-XXXX-XXXX">
+      <button class="act sec" onclick="unlockCheck('${key}')">Разблокировать</button></div>
+    <div id="unlock-msg-${key}" class="pay-note"></div>
+  </div>`;
+}
+window.payClick=function(){
+  const msg=document.querySelector('.view.active .pay-note, #view-trainer .pay-note');
+  if(PAY_LINK==='#'){
+    if(msg)msg.innerHTML='<span style="color:var(--yellow)">Оплата подключается на следующем шаге. Для теста используйте код EXAM-490-DEMO</span>';
+  }else{window.open(PAY_LINK,'_blank');}
+};
+window.unlockCheck=function(key){
+  const inp=document.getElementById('unlock-code-'+key);
+  const msg=document.getElementById('unlock-msg-'+key);
+  const c=((inp&&inp.value)||'').trim().toUpperCase();
+  if(CODES.includes(c)){
+    UNLOCKED=true;try{localStorage.setItem('exam-unlocked','1');}catch(e){}
+    if(msg)msg.innerHTML='<span style="color:var(--green)">✓ Разблокировано — тренажёр и мини-экзамен открыты.</span>';
+    renderTrainer();renderExam();
+  }else if(msg){msg.innerHTML='<span style="color:var(--red)">✗ Код не подошёл. Проверьте написание или оплатите доступ.</span>';}
+};
 
 /* ====== РЕНДЕР ====== */
 const $=s=>document.querySelector(s);
@@ -250,7 +288,7 @@ function renderTrainer(){
   $('#view-trainer').innerHTML=`
   <div class="card">
     <h3>♾️ Тренажёр: каждый раз — новые числа</h3>
-    <div class="muted">Выберите тип задач и решайте. После проверки — решение с подстановкой ваших чисел. Серия верных ответов сохраняется в браузере.</div>
+    <div class="muted">Выберите тип задач и решайте. После проверки — решение с подстановкой ваших чисел. Серия верных ответов сохраняется в браузере. Первые ${DEMO_TRAINER} задачи — бесплатно, полный доступ — 490 ₽.</div>
     <div class="trainer-ctl">
       <div><label>Тип задач</label>
         <select id="tr-type">
@@ -268,9 +306,15 @@ function renderTrainer(){
   renderStreak(); newTask();
 }
 function renderStreak(){
-  $('#tr-streak').innerHTML=`Серия верных ответов: <b>${streak}</b> · Лучший результат: <b>${best}</b>`;
+  const demo=!UNLOCKED?` · Бесплатных демо-задач осталось: <b>${Math.max(0,demoLeft)}</b> из ${DEMO_TRAINER}`:'';
+  $('#tr-streak').innerHTML=`Серия верных ответов: <b>${streak}</b> · Лучший результат: <b>${best}</b>${demo}`;
 }
 window.newTask=function(){
+  if(!UNLOCKED){
+    if(demoLeft<=0){$('#tr-box').innerHTML=payBlock('tr');return;}
+    demoLeft--;try{localStorage.setItem('exam-demo-used',String(DEMO_TRAINER-demoLeft));}catch(e){}
+    renderStreak();
+  }
   const type=$('#tr-type').value;
   const t=type==='mix'?genOne(rnd(['A','B','B','C'])):genOne(type);
   curT=t;
@@ -306,6 +350,7 @@ window.checkTask=function(){
 /* --- Мини-экзамен --- */
 let examTasks=null;
 function renderExam(){
+  if(!UNLOCKED){$('#view-exam').innerHTML=payBlock('ex');return;}
   examTasks=[genA(),genB(),genB(),genC(),rnd([genA(),genB()])];
   $('#view-exam').innerHTML=`
   <div class="card">
