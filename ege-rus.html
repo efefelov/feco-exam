@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Трек: ЕГЭ математика (профиль) — часть 1, задания 1–14</title>
+<style>
+:root{
+  --bg:#0f1117; --panel:#171a23; --panel2:#1d2130; --border:#2a2f42;
+  --text:#e8eaf2; --muted:#9aa0b5; --accent:#4f8cff; --accent2:#8b5cf6;
+  --green:#34c77b; --red:#ef5b6e; --yellow:#f0b429; --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;font-size:15px}
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px 80px}
+header{padding:26px 0 10px}
+h1{font-size:21px;font-weight:600}
+h3{font-size:17px;margin-bottom:8px;font-weight:600}
+.sub{color:var(--muted);margin-top:6px;font-size:14px}
+.badge-demo{display:inline-block;font-size:11px;padding:3px 10px;border-radius:99px;background:rgba(240,180,41,.15);color:var(--yellow);margin-top:8px}
+.top{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 0}
+.mini-badge{font-size:12px;padding:3px 10px;border-radius:99px;background:var(--panel2);border:1px solid var(--border)}
+.mini-badge b{color:var(--green)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 8px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:10}
+.tab{background:var(--panel);border:1px solid var(--border);color:var(--text);padding:9px 16px;border-radius:99px;cursor:pointer;font-size:14px;transition:.15s}
+.tab:hover{border-color:var(--accent)}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.view{display:none}
+.view.active{display:block}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin:12px 0}
+.muted{color:var(--muted);font-size:13px}
+ul,ol{margin:8px 0 8px 20px}
+li{margin:5px 0}
+b{color:#fff}
+.callout{border-left:3px solid var(--accent);background:var(--panel2);padding:10px 14px;border-radius:0 10px 10px 0;margin:12px 0;font-size:14px}
+.callout.gold{border-color:var(--yellow)}
+.callout.green{border-color:var(--green)}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+th{text-align:left;color:var(--muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--border)}
+.q{margin:14px 0;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--panel)}
+.qq{font-weight:600;margin-bottom:10px;white-space:pre-line}
+.opt{display:block;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:10px;margin:6px 0;cursor:pointer;font-size:14px}
+.opt:hover{border-color:var(--accent)}
+.opt.sel{border-color:var(--accent);background:rgba(79,140,255,.12)}
+.opt.correct{border-color:var(--green);background:rgba(52,199,123,.15)}
+.opt.wrong{border-color:var(--red);background:rgba(239,91,110,.15)}
+.expl{display:none;margin-top:10px;font-size:13px;color:var(--muted);border-top:1px dashed var(--border);padding-top:8px}
+.expl.show{display:block}
+.score{display:none;margin-top:12px;padding:12px;border-radius:10px;font-weight:600}
+.score.show{display:block}
+.score.pass{background:rgba(52,199,123,.15);color:var(--green)}
+.score.fail{background:rgba(239,91,110,.15);color:var(--red)}
+button.act{background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:10px;cursor:pointer;font-size:14px;margin:4px 6px 4px 0}
+button.act:hover{filter:brightness(1.12)}
+button.act.sec{background:var(--panel2);border:1px solid var(--border);color:var(--text)}
+.streak{font-size:14px;margin-top:8px}
+.streak b{color:var(--green)}
+.trainer-ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin:10px 0}
+.trainer-ctl label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+select{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:14px}
+.step{margin:6px 0;padding-left:12px;border-left:2px solid var(--border)}
+.formula{background:var(--panel2);border-radius:8px;padding:8px 12px;font-family:Consolas,monospace;font-size:14px;margin:6px 0;display:inline-block}
+.err td{color:var(--red)}
+.big-res{font-size:24px;font-weight:600;margin:8px 0}
+.code-input{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:10px;font-size:14px;width:240px;margin:6px 6px 6px 0}
+.pay-note{margin-top:8px;font-size:13px}
+.bar{background:var(--panel2);border-radius:99px;height:10px;overflow:hidden;margin:4px 0}
+.bar i{display:block;height:100%;background:var(--accent)}
+.bar i.ok{background:var(--green)}
+.bar i.warn{background:var(--yellow)}
+.bar i.bad{background:var(--red)}
+.rank{display:inline-block;font-size:13px;padding:4px 12px;border-radius:99px;background:rgba(139,92,246,.15);color:var(--accent2)}
+.golden{border-color:var(--yellow)!important;background:rgba(240,180,41,.08)!important}
+textarea{width:100%;min-height:150px;background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:10px;font-size:13px;font-family:Consolas,monospace}
+svg.geom{background:#e8eaf2;border-radius:8px;margin:8px 0}
+.timer{font-size:22px;font-weight:600;font-family:Consolas,monospace}
+.timer.warn{color:var(--red)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>🎓 Трек «ЕГЭ русский язык» — орфография и грамматика</h1>
+  <div class="sub">Диагностика → разбор → тренажёр с новыми вопросами → мини-экзамен с готовностью в %.</div>
+  <div class="top">
+    <span class="badge-demo">Задания — собственные аналоги типов открытого банка ФИПИ (не копии КИМов)</span>
+    <span class="mini-badge">🔥 Серия дней: <b id="hb-days">–</b></span>
+    <span class="mini-badge">🎯 Задача дня: <b id="hb-quest">–</b></span>
+    <span class="mini-badge" id="hb-rank">🏅 –</span>
+    <a class="mini-badge" style="text-decoration:none" href="index.html">← Каталог предметов</a>
+  </div>
+</header>
+<div class="tabs">
+  <button class="tab active" data-view="diag">🧪 Диагностика</button>
+  <button class="tab" data-view="theory">📘 Разбор</button>
+  <button class="tab" data-view="trainer">♾️ Тренажёр</button>
+  <button class="tab" data-view="exam">🎓 Мини-экзамен</button>
+  <button class="tab" data-view="progress">📊 Прогресс</button>
+</div>
+
+<div class="view active" id="view-diag"></div>
+<div class="view" id="view-theory"></div>
+<div class="view" id="view-trainer"></div>
+<div class="view" id="view-exam"></div>
+<div class="view" id="view-progress"></div>
+</div>
+
+<script>
+/* =====================================================================
+   ФЕКО ЕГЭ профмат — движок трека. Коды/чексумма СИНХРОНИЗИРОВАТЬ с
+   index.html и ботом-воркером. Генераторы чистые: gen(rng).
+===================================================================== */
+const $=s=>document.querySelector(s);
+const esc=s=>s.replace(/"/g,'&quot;');
+const fmt=n=>Math.round(n).toLocaleString('ru-RU');
+let QRNG=null; // подменяется только для «задач дня» (детерминизм: одинаковые у всех)
+const rnd=arr=>arr[Math.floor((QRNG||Math.random)()*arr.length)];
+function mulberry32(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+const todayStr=()=>new Date().toISOString().slice(0,10);
+
+/* ====== ДОСТУП (как в каталоге) ====== */
+const MY_PREFIX='RUS'; // этот трек
+const ALPHABET='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+const LEGACY=['EXAM-490-DEMO','FECO-EXAM-490'];
+const SUBJECT_PREFIX=['MAT','BAS','RUS','INF','FIZ','OGM'];
+const DEMO_TRAINER=3;
+let demoLeft=DEMO_TRAINER;
+try{demoLeft=DEMO_TRAINER-(+(localStorage.getItem('exam-demo-used')||0));}catch(e){}
+function codeChecksum(body){let s=0;for(const ch of body){const i=ALPHABET.indexOf(ch);if(i<0)return -1;s+=i;}return s%31;}
+function parseCode(code){
+  const c=((code||'')+'').trim().toUpperCase().replace(/\s+/g,'');
+  const m=c.match(/^([A-Z]{2,5})-([A-Z0-9]{8})$/);if(!m)return null;
+  const body=m[2].slice(0,7),chk=m[2][7];
+  if(ALPHABET.indexOf(chk)<0)return null;
+  if(codeChecksum(body)!==ALPHABET.indexOf(chk))return null;
+  return {prefix:m[1],body};
+}
+function getAccess(){try{return JSON.parse(localStorage.getItem('exam-access')||'{}');}catch(e){return {};}}
+function setAccess(a){try{localStorage.setItem('exam-access',JSON.stringify(a));}catch(e){}}
+function hasAccess(){
+  const a=getAccess();
+  try{if(localStorage.getItem('exam-unlocked')==='1')return true;}catch(e){}
+  return a.all===true||((a.allUntil||0)>Date.now())||!!(a.subjects&&a.subjects[MY_PREFIX]);
+}
+function payBlock(key){
+  return `<div class="card">
+    <h3>🔒 Полный доступ к треку — 990 ₽</h3>
+    <div class="muted">Разово, навсегда — дешевле одного занятия с репетитором (1 500–2 500 ₽/час). Тренажёр с бесконечными вариантами, 8 типов орфографии/грамматики, мини-экзамен с верифицированной готовностью в %.</div>
+    <div style="margin:12px 0"><button class="act" onclick="payClick()">Купить за 990 ₽</button></div>
+    <div><span class="muted">Уже оплатили? Введите код из письма/бота:</span><br>
+      <input type="text" id="unlock-code-${key}" class="code-input" placeholder="XXXX-XXXXXXXX">
+      <button class="act sec" onclick="unlockCheck('${key}')">Разблокировать</button></div>
+    <div id="unlock-msg-${key}" class="pay-note"></div>
+    <div class="callout gold" style="margin-top:12px">💡 Выгоднее подписка: <b>490 ₽/мес — все предметы</b>. Диагностика и разбор бесплатны всегда.</div>
+  </div>`;
+}
+window.payClick=function(){
+  const msg=document.querySelector('.view.active .pay-note');
+  if(msg)msg.innerHTML='<span style="color:var(--yellow)">Оплата — в Telegram-боте (⭐ Stars) или ручным кодом после перевода. Бот запускается — пока используйте тестовый код MAT-490-DEMO (написан в канале).</span>';
+};
+window.unlockCheck=function(key){
+  const inp=document.getElementById('unlock-code-'+key);
+  const msg=document.getElementById('unlock-msg-'+key);
+  const c=((inp&&inp.value)||'').trim().toUpperCase();
+  if(LEGACY.includes(c)){
+    const a=getAccess();a.all=true;setAccess(a);
+    msg.innerHTML='<span style="color:var(--green)">✓ Полный доступ активирован — обновляю страницы…</span>';
+    renderTrainer();renderExam();
+  }else{
+    const p=parseCode(c);
+    if(!p){msg.innerHTML='<span style="color:var(--red)">✗ Код не подошёл. Проверьте написание или оплатите доступ.</span>';}
+    else if(p.prefix==='ALL'){
+      const a=getAccess();a.allUntil=Date.now()+30*864e5;setAccess(a);
+      msg.innerHTML='<span style="color:var(--green)">✓ Все предметы открыты на 30 дней.</span>';
+      renderTrainer();renderExam();
+    }else if(p.prefix===MY_PREFIX){
+      const a=getAccess();a.subjects=a.subjects||{};a.subjects[MY_PREFIX]=1;setAccess(a);
+      msg.innerHTML='<span style="color:var(--green)">✓ Трек открыт навсегда.</span>';
+      renderTrainer();renderExam();
+    }else if(SUBJECT_PREFIX.includes(p.prefix)){
+      msg.innerHTML='<span style="color:var(--yellow)">Код от другого предмета ('+p.prefix+'). Для этого трека нужен код MAT-… или ALL-…</span>';
+    }else{msg.innerHTML='<span style="color:var(--red)">✗ Неизвестный код. Напишите нам — проверим.</span>';}
+  }
+};
+
+/* ====== ГЕОМЕТРИЧЕСКИЙ SVG ====== */
+function svgTriangle(a,b,c){
+  const k=Math.min(180/b,110/a,1.6);
+  const bw=b*k,bh=a*k;
+  return `<svg class="geom" width="${Math.round(bw+30)}" height="${Math.round(bh+30)}" viewBox="0 0 ${Math.round(bw+30)} ${Math.round(bh+30)}">
+  <polygon points="20,${Math.round(20+bh)} 20,20 ${Math.round(20+bw)},${Math.round(20+bh)}" fill="none" stroke="#1d2130" stroke-width="2.5"/>
+  <rect x="20" y="${Math.round(20+bh-12)}" width="12" height="12" fill="none" stroke="#1d2130" stroke-width="1.5"/>
+  <text x="10" y="${Math.round(20+bh/2)}" font-size="13" fill="#333">${a}</text>
+  <text x="${Math.round(20+bw/2)}" y="${Math.round(30+bh)}" font-size="13" fill="#333">${b}</text>
+  <text x="${Math.round(26+bw/2)}" y="${Math.round(20+bh/2)}" font-size="13" fill="#333">${c}</text>
+  <text x="24" y="${Math.round(14+bh)}" font-size="10" fill="#666">прямой угол</text>
+  </svg>`;
+}
+function svgDerGraph(k){ // график производной с k пересечениями нуля
+  const vals={2:[2,-1,1],3:[2,-1,3,-2],4:[2,-1,3,-2,2]}[k];
+  const pts=[];const n=11;
+  for(let i=0;i<n;i++){
+    const t=i*(vals.length-1)/(n-1);
+    const j=Math.min(Math.floor(t),vals.length-2);
+    const y=vals[j]+(vals[j+1]-vals[j])*(t-j);
+    pts.push(`${20+i*26},${Math.round(70-y*16)}`);
+  }
+  return `<svg class="geom" width="300" height="140" viewBox="0 0 300 140">
+  <line x1="10" y1="70" x2="290" y2="70" stroke="#999" stroke-width="1"/>
+  <line x1="150" y1="10" x2="150" y2="130" stroke="#999" stroke-width="1"/>
+  <polyline points="${pts.join(' ')}" fill="none" stroke="#4f8cff" stroke-width="3"/>
+  <text x="292" y="74" font-size="11" fill="#333">x</text>
+  <text x="154" y="16" font-size="11" fill="#333">f′</text>
+  </svg>`;
+}
+
+function mk(rng,fun){return fun?fun(rng||Math.random):null;}
+/* ====== ТИПЫ ЕГЭ РУССКИЙ (банки; СИНХРОНИЗИРОВАТЬ с воркером бота) ====== */
+const BANKS={
+ r1:[
+  ['з_ря','а','Зар-/зор-: без ударения пишется А (заря, озарение). Ловушка: написал «о» по звучанию слова «зорька».'],
+  ['оз_рение','а','Зар-/зор-: без ударения А.'],
+  ['заг_реть','о','Гар-/гор-: без ударения О (загореть, горел). Ловушка: перенёс правило «заря» на другой корень.'],
+  ['уг_р','о','Гар-/гор-: без ударения О (угар).'],
+  ['прил_гать','а','Лаг-/лож-: перед Г пишется А. Ловушка: «приложить» пишется через О — там ЛОЖ.'],
+  ['прил_жение','о','Лаг-/лож-: перед Ж пишется О.'],
+  ['выр_сли','о','Раст-/рос-: перед С пишется О (выросли). Ловушка: «растение» через А — там СТ.'],
+  ['к_снуться','о','Кас-/кос-: без суффикса -а- пишется О (коснуться).'],
+  ['к_саться','а','Кас-/кос-: перед суффиксом -а- пишется А (касаться).']
+ ],
+ r2:[
+  ['пр_ехать в город','и','При-/пре-: ПРИ- — приближение (приехать). Ловушка: написал ПРЕ- по звучанию.'],
+  ['пр_красный вид','е','При-/пре-: ПРЕ- = «очень» (прекрасный = очень красивый).'],
+  ['пр_школьный участок','и','ПРИ- = «около» (пришкольный).'],
+  ['пр_морский','и','ПРИ- = «около, рядом» (приморский — у моря).'],
+  ['пр_рвать разговор','е','ПРЕ- близко к «пере-» (прервать = перервать).'],
+  ['пр_зирать труса','е','ПРЕ-: презирать — значение «ненавидеть очень», пишется ПРЕ-.'],
+  ['пр_сесть на стул','и','ПРИ- = «рядом, чуть-чуть» (присесть).']
+ ],
+ r3:[
+  ['ветре_ый день','н','Одно Н: «ветреный» — исключение (день ветреный, но «безветренный»).'],
+  ['стекля_ый шар','нн','НН: стеклянный — исключение (стеклянный, оловянный, деревянный).'],
+  ['песча_ый берег','н','Одно Н: суффикс -ан- (песчаный).'],
+  ['соломе_ый плащ','нн','НН: суффикс -енн- (соломенный).'],
+  ['кова_ый забор','н','Одно Н: кованый — отглагольное без приставки и без зависимых слов.'],
+  ['мощё_ая плиткой дорожка','нн','НН: причастие с зависимым словом (мощённая плиткой). Ловушка: «как кованый» — тут есть зависимое слово.'],
+  ['серебря_ый браслет','н','Одно Н: суффикс -ян- (серебряный).'],
+  ['орга_ованный праздник','нн','НН: причастие с приставкой (организованный).']
+ ]
+};
+function rusBankGen(r,bankName,letters){
+  return mk(r,()=>{
+    const it=pick(r,BANKS[bankName]);
+    const [word,letter,expl]=it;
+    const four=shuf(r,letters);
+    return {q:`Вставьте пропущенную букву: ${word}`,
+      o:four.map(x=>x[0]),c:four.findIndex(x=>x[0]===letter),
+      e:expl};});
+}
+const TYPES=[
+ {id:'r1',name:'Безударные гласные в корне',w:1,trap:'написал «как слышится»',gist:'чередующиеся корни: зар-/гор-/лаг-/раст-/кас-',gen:r=>rusBankGen(r,'r1',['а','о','е','я'])},
+ {id:'r2',name:'Приставки ПРИ-/ПРЕ-',w:1,trap:'выбрал приставку по звучанию',gist:'ПРИ- = приближение/рядом/чуть; ПРЕ- = «очень»/«пере-»',gen:r=>rusBankGen(r,'r2',['и','е'])},
+ {id:'r3',name:'Н и НН в прилагательных',w:1,trap:'одно Н вместо двух (или наоборот)',gist:'-ан/-ян/-ин → Н; -онн/-енн, причастие с приставкой → НН',gen:r=>rusBankGen(r,'r3',['н','нн'])},
+ {id:'r4',name:'Запятая перед И',w:1,trap:'не увидел вторую основу',gist:'запятая перед И — если вторая основа (сложное предложение)',gen:r=>mk(r,()=>{
+   const it=pick(r,[
+     ['Утро было ясное(1) и тёплое(2) и мы вышли рано.',1,'(1) — однородные определения, запятая не нужна; (2) — вторая основа «мы вышли», запятая нужна.'],
+     ['Дождь прекратился(1) и мы пошли дальше(2) и разговаривали.',0,'(1) — вторая основа «мы пошли», запятая нужна; (2) — у «мы» два однородных сказуемых («пошли» и «разговаривали»), запятая не нужна.'],
+     ['Он взял сумку(1) и вышел из дома(2) и закрыл дверь.',3,'Одна основа «он» при однородных сказуемых — запятых нет.'],
+     ['Мама сварила суп(1) и испекла пирог(2) и позвала всех к столу.',3,'Одна основа «мама», три однородных сказуемых — запятых нет.']
+   ]);
+   return {q:`Где нужны запятые на местах (1) и (2)?
+${it[0]}`,
+     o:['Запятая на месте (1)','Запятая на месте (2)','Обе запятые','Ни одной запятой'],
+     c:it[1],
+     e:it[2]+' Ловушка — не увидел вторую основу (подлежащее + сказуемое).'};})},
+ {id:'r5',name:'Грамматические нормы',w:1,trap:'выбрал «как все говорят»',gist:'нормы: оплатить проезд, по приезде, более красивый',gen:r=>mk(r,()=>{
+   const it=pick(r,[
+     [['оплатить проезд','оплатить за проезд','оплата за проезд','заплатить за проезд'],0,'«Оплачивать/оплатить» — без «за» (оплатить проезд). «Заплатить за» — верно, потому что другой глагол.'],
+     [['по приезде в город','по приезду в город','по окончанию школы','со звонка'],0,'«По» в значении «после» требует предл. падеж: по приезде, по окончании, по прибытии.'],
+     [['более красивый вид','самый красивейший','менее красивее','красивее всего'],0,'Нельзя соединять две степени сравнения («самый красивейший» — ошибка).'],
+     [['согласно приказу','согласно приказа','сообразно плана','вопреки совета'],0,'«Согласно» + дательный падеж: согласно приказу. «Вопреки» тоже дательный: вопреки совету.'],
+     [['проехал три километра','проехал трое километров','прошёл пятеро метров','ждал семеро минут'],0,'Количественные числительные (три, пять), не собирательные (трое) с единицами измерения.']
+   ]);
+   const four=shuf(r,it[0]);
+   return {q:`В каком варианте нет грамматической ошибки?`,
+     o:four.map(x=>x[0]),c:four.findIndex(x=>x[0]===it[0][it[1]]),
+     e:it[2]};})},
+ {id:'r6',name:'Паронимы',w:1,trap:'взял звучащее слово',gist:'одеть/надеть, адресат/адресант, эффективный/эффектный',gen:r=>mk(r,()=>{
+   const it=pick(r,[
+     ['_ пальто на ребёнка',['надеть','одеть'],'Надеть (что-то на кого-то) пальто; одеть (кого-то) ребёнка.'],
+     ['купить _ на бассейн',['абонемент','абонент'],'Абонемент — документ/право пользования; абонент — тот, кто подключён к сети.'],
+     ['_ способ борьбы',['эффективный','эффектный'],'Эффективный — действенный; эффектный — производящий впечатление.'],
+     ['письмо пришло _: проверьте почту',['адресату','адресанту'],'Адресат — получатель; адресант — отправитель. «Пришло адресату».'],
+     ['_ костюм на празднике',['эффектный','эффективный'],'Эффектный — броский, производящий эффект.']
+   ]);
+   const four=shuf(r,it[1]);
+   return {q:`Вставьте подходящее слово: ${it[0]}`,
+     o:four.map(x=>x[0]),c:four.findIndex(x=>x[0]===it[1][0]),
+     e:it[2]+' Ловушка — выбрал слово «как звучит», а не по значению.'};})},
+ {id:'r7',name:'НЕ: слитно или раздельно',w:1,trap:'раздельно там, где НЕ — часть корня',gist:'НЕ с существительными/прилагательными слитно, если замена синонимом; раздельно при противопоставлении',gen:r=>mk(r,()=>{
+   const it=pick(r,[
+     ['(Не)вежливый человек','Слитно','Невежливый — заменяется синонимом «грубый». Ловушка: написал раздельно «как слышится».'],
+     ['(Не) получил ответ','Раздельно','Частица НЕ с глаголом — раздельно.'],
+     ['(Не) далеко, а близко','Раздельно','Противопоставление с союзом «а» — раздельно.'],
+     ['(Не)ряха','Слитно','Существительное без НЕ не употребляется.'],
+     ['(Не)лепый ответ','Слитно','Нелепый — без НЕ не употребляется.'],
+     ['(Не)исправленный вовремя прибор — неисправный','Слитно','Причастие с наречием меры/времени («вовремя») — НЕ слитно. Раздельно было бы с зависимым в твор. падеже: не исправленный мастером.']
+   ]);
+   const four=shuf(r,['Слитно','Раздельно']);
+   return {q:`Слитно или раздельно: ${it[0]}?`,
+     o:four.map(x=>x[0]),c:four.findIndex(x=>x[0]===it[1]),
+     e:it[2]};})},
+ {id:'r8',name:'Микротекст: основная мысль',w:1,trap:'выбрал деталь вместо главной мысли',gist:'основная мысль = обобщение, а не пример',gen:r=>mk(r,()=>{
+   const it=pick(r,[
+     ['«Многие города мира страдают от пробок. В Лондоне средняя скорость автомобиля в час пик — 15 км/ч. В Москве строят развязки, а в Амстердаме развивают велоинфраструктуру — и пробок меньше.»','Главная мысль — про ВЕЛОИНФРАСТРУКТУРУ как решение','Главная мысль — про то, что города по-разному борются с пробками','Главная мысль — про то, что Лондон самый загруженный','Главная мысль — про московские развязки',1,'Главная мысль — обобщение («города ищут разные решения»), конкретные города — примеры. Ловушка — выбрал деталь.'],
+     ['«Чтение вслух детям до 5 лет связано с большим словарным запасом в школе. Исследования показывают: важна не длительность, а регулярность — 15 минут каждый день.»','Главная мысль — про важность длительности чтения','Главная мысль — про связь регулярного чтения вслух со словарным запасом','Главная мысль — про исследования словаря','Главная мысль — про детей до 5 лет',1,'Обобщение: регулярное чтение вслух → богатый словарь. Остальное — детали.']
+   ]);
+   return {q:`Какая формулировка точнее передаёт основную мысль текста?
+${it[0]}`,
+     o:it.slice(1,5),c:it[5],
+     e:it[6]};})}
+];
+
+
+/* ====== БАНКИ ВОПРОСОВ (для знаниевых предметов) ====== */
+function pick(r,arr){return arr[Math.floor(r()*arr.length)];}
+function shuf(r,arr){
+  const a=arr.map((v,i)=>[v,i]);
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+/* ====== СОСТОЯНИЕ И МЕХАНИКИ ====== */
+const K={stats:'exrus-stats',days:'exrus-days',badges:'exrus-badges',best:'exrus-best',quest:'exrus-quest',exam:'exrus-exam-best'};
+function load(k,d){try{return JSON.parse(localStorage.getItem(k)||'null')||d;}catch(e){return d;}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+let stats=load(K.stats,{});
+let days=load(K.days,{last:'',streak:0,freezes:1});
+let badges=load(K.badges,[]);
+let best=load(K.best,0);
+let quest=load(K.quest,{date:'',done:0});
+let examBest=load(K.exam,null);
+let streak=0; // серия сессии
+let fastOk=0;let goldenMsg='';
+const RANKS=[[0,'Новичок'],[15,'Решала'],[50,'Снайпер'],[150,'Мастер экзамена']];
+function totalOk(){let n=0;for(const t in stats)n+=stats[t].ok;return n;}
+function rank(){const n=totalOk();let r=RANKS[0][1];for(const [m,name] of RANKS)if(n>=m)r=name;return r;}
+function rankNext(){const n=totalOk();for(const [m,name] of RANKS)if(n<m)return {name,need:m-n};return null;}
+function unlockBadge(id,name){
+  if(badges.includes(id))return;
+  badges.push(id);save(K.badges,badges);
+  goldenMsg+=` 🏅 Новый бейдж: <b>${name}</b>!`;
+}
+function touchDays(){
+  const today=todayStr();
+  if(days.last===today)return;
+  const yest=new Date(Date.now()-864e5).toISOString().slice(0,10);
+  if(days.last===yest){days.streak++;}
+  else if(days.last&&days.freezes>0){days.freezes--;goldenMsg+=' ❄️ Заморозка серии использована — серия сохранена!';}
+  else{days.streak=1;}
+  days.last=today;
+  if(days.streak>=5)unlockBadge('streak5','Пять дней подряд 🔥');
+  if(days.streak>=10)unlockBadge('streak10','Десять дней подряд 🔥🔥');
+  save(K.days,days);
+}
+function questNew(){
+  const today=todayStr();
+  if(quest.date!==today){quest={date:today,done:0};save(K.quest,quest);}
+  return quest;
+}
+function questTask(i){ // задачи дня: seeded PRNG от даты — одинаковые у всех
+  const base=hashStr('feco-exam-quest-'+todayStr()+'-'+i);
+  for(let k=0;k<12;k++){
+    QRNG=mulberry32(base+k*7919);
+    const t=TYPES[(base+k)%TYPES.length].gen(QRNG);
+    QRNG=null;
+    if(t&&validTask(t))return t; // svg/невалидные пропускаются детерминированно
+  }
+  QRNG=null;
+  return TYPES[0].gen(Math.random);
+}
+function record(typeId,ok,ms){
+  const s=stats[typeId]||(stats[typeId]={n:0,ok:0,times:[],wrong:0});
+  s.n++;if(ok){s.ok++;s.times.push(Math.round(ms));if(s.times.length>50)s.times.shift();}
+  else s.wrong++;
+  save(K.stats,stats);
+  const q=questNew();
+  if(ok&&q.done<3){q.done++;save(K.quest,quest);
+    if(q.done===3)unlockBadge('quest1','Задача дня выполнена 🎯');
+    if(q.done===3)goldenMsg+=' ✅ Квест дня закрыт — все 3 задачи!';
+  }
+  touchDays();
+  if(totalOk()>=15)unlockBadge('rank2','Ранг «Решала» 🏅');
+  if(totalOk()>=50)unlockBadge('rank3','Ранг «Снайпер» 🏅');
+  if(totalOk()>=150)unlockBadge('rank4','Ранг «Мастер экзамена» 🏅');
+}
+function headerBadges(){
+  $('#hb-days').textContent=days.streak>0?days.streak+' дн.':'—';
+  const q=questNew();$('#hb-quest').textContent=q.done+'/3';
+  $('#hb-rank').innerHTML='🏅 '+rank()+(totalOk()?' · '+totalOk():'');
+}
+function renderStreakLine(extra){
+  const questP=questNew();
+  const demo=!hasAccess()?` · Демо-задач осталось: <b>${Math.max(0,demoLeft)}</b>`:'';
+  $('#tr-streak').innerHTML=`Серия сессии: <b>${streak}</b> · Рекорд: <b>${best}</b> · Серия дней: <b>${days.streak}</b> 🔥 · Квест: <b>${questP.done}/3</b>${demo}${goldenMsg?(' · '+goldenMsg):''}${extra||''}`;
+  headerBadges();
+}
+
+/* ====== РЕНДЕР ВОПРОСОВ ====== */
+function quizBlock(q,qi){
+  return `<div class="q" data-qi="${qi}" data-c="${q.c}">
+    ${q.svg||''}
+    <p class="qq">${qi+1}. ${q.q}</p>
+    ${q.o.map(o=>`<button type="button" class="opt" onclick="pickOpt(this)">${esc(o)}</button>`).join('')}
+    <div class="expl">💡 ${q.e}</div>
+  </div>`;
+}
+window.pickOpt=function(btn){
+  const q=btn.closest('.q');
+  if(q.classList.contains('locked'))return;
+  q.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+  btn.classList.add('sel');
+};
+function checkAll(container,qs){
+  let right=0;let totalMs=0;
+  qs.forEach((q,i)=>{
+    const el=document.querySelectorAll(container+' .q')[i];
+    el.classList.add('locked');
+    const c=+el.dataset.c,opts=el.querySelectorAll('.opt'),sel=el.querySelector('.opt.sel');
+    opts[c].classList.add('correct');
+    if(sel){
+      const ok=+[...opts].indexOf(sel)===c;
+      if(ok)right++;else sel.classList.add('wrong');
+      const ms=Date.now()-(q._t0||Date.now());
+      totalMs+=ms;
+      record(q._type,ok,ms);
+    }
+    el.querySelector('.expl').classList.add('show');
+  });
+  return {right,avgMs:qs.length?totalMs/qs.length:0};
+}
+function scoreMsg(el,right,n,passN,pass,extra){
+  el.className='score show '+(pass?'pass':'fail');
+  el.textContent=`Результат: ${right} из ${n}. `+(pass?`Зачёт! ${extra}`:`Нужно ${passN}. Смотрите разборы ниже — и переходите в Тренажёр закреплять.`);
+}
+
+/* ====== ДИАГНОСТИКА (5 задач — стартовые ловушки) ====== */
+const DIAG=[
+ {type:'r1',q:'Вставьте букву: заг_реть на солнце.',o:['о','а','е','я'],c:0,
+  e:'Гар-/гор-: без ударения О — загореть. Ловушка: перенёс правило корня «заря».'},
+ {type:'r2',q:'ПРИ- или ПРЕ-: пр_школьный участок.',o:['и','е'],c:0,
+  e:'ПРИ- = «около» (пришкольный). Ловушка: написал по звучанию «пре».'},
+ {type:'r3',q:'Н или НН: песча_ый берег.',o:['н','нн'],c:0,
+  e:'Одно Н: суффикс -ан- (песчаный). Ловушка: «удвоенная согласная красивее».'},
+ {type:'r5',q:'В каком варианте нет грамматической ошибки?',o:['оплатить за проезд','по приезду в город','более красивее','оплатить проезд'],c:3,
+  e:'«Оплачивать/оплатить» — без «за» (оплатить проезд). Остальные: «оплатить за» — лишний предлог, «по приезду» → «по приезде», «более красивее» — двойная степень сравнения.'},
+ {type:'r7',q:'Слитно или раздельно: (Не)ряха?',o:['Слитно','Раздельно'],c:0,
+  e:'Существительное без НЕ не употребляется — слитно: неряха.'}
+];
+function renderDiag(){
+  $('#view-diag').innerHTML=`
+  <div class="card">
+    <h3>🧪 Диагностический тест: 5 задач</h3>
+    <div class="muted">5 минут. Цель — увидеть, какие ловушки срабатывают именно у вас. Бесплатно. Отвечайте на все, затем «Проверить».</div>
+  </div>
+  <div class="card"><div id="quiz-diag">${DIAG.map((q,i)=>`<div class="q" data-c="${q.c}"><p class="qq">${i+1}. ${q.q}</p>${q.o.map(o=>`<button type="button" class="opt" onclick="pickOpt(this)">${esc(o)}</button>`).join('')}<div class="expl">💡 ${q.e}</div></div>`).join('')}</div>
+    <div class="score" id="score-diag"></div>
+    <button class="act" onclick="runDiag()">Проверить</button>
+    <button class="act sec" onclick="resetBlock('#quiz-diag','#score-diag')">Сбросить</button>
+  </div>`;
+  DIAG.forEach(q=>{q._t0=Date.now();q._type=q.type;});
+}
+window.runDiag=function(){
+  const {right}=checkAll('#quiz-diag',DIAG);
+  scoreMsg($('#score-diag'),right,DIAG.length,4,right>=4,
+    right===5?'Уровень отличный — идите в Мини-экзамен подтверждать.':'Хорошая база! Слабые места — в разборах, закрепление — в Тренажёре.');
+};
+window.resetBlock=function(qc,sc){
+  document.querySelectorAll(qc+' .q').forEach(q=>{
+    q.classList.remove('locked');
+    q.querySelectorAll('.opt').forEach(o=>o.className='opt');
+    q.querySelector('.expl').classList.remove('show');
+  });
+  document.querySelector(sc).className='score';
+};
+
+/* ====== РАЗБОР ====== */
+function renderTheory(){
+  $('#view-theory').innerHTML=`
+  <div class="card">
+    <h3>📘 Методика «3 шага» для орфографии</h3>
+    <div class="step"><b>1. Определи часть слова.</b> Пропуск в корне? Приставке? Суффиксе? — правила разные.</div>
+    <div class="step"><b>2. Найди правило, а не «как слышится».</b> 90% ошибок — «как слышится». Чередующиеся корни и Н/НН проверяются правилом.</div>
+    <div class="step"><b>3. Проверь исключения.</b> Ветреный (одно Н), стеклянный/оловянный/деревянный (НН) — их надо помнить.</div>
+  </div>
+  <div class="card">
+    <h3>Все типы трека и их ловушки</h3>
+    <table>
+      <tr><th>Тип</th><th>Суть</th><th>Главная ловушка</th></tr>
+      ${TYPES.map(t=>`<tr><td>${t.name}</td><td>${t.gist}</td><td>${t.trap}</td></tr>`).join('')}
+    </table>
+    <div class="callout green">Именно поэтому в Тренажёре числа меняются при каждом прохождении: «выучить вариант» невозможно — растёт навык.</div>
+  </div>`;
+}
+
+
+/* ====== ТРЕНЖЁР ====== */
+let curT=null,curT0=0;
+function renderTrainer(){
+  if(!hasAccess()&&demoLeft<=0){$('#view-trainer').innerHTML=payBlock('tr');return;}
+  $('#view-trainer').innerHTML=`
+  <div class="card">
+    <h3>♾️ Тренажёр: каждый раз — новые числа</h3>
+    <div class="muted">Выберите тип и решайте. Ответы быстрее 2 секунд не наращивают серию (анти-чит) — решайте, а не тыкайте. Первые ${DEMO_TRAINER} задачи бесплатно, полный доступ — 990 ₽.</div>
+    <div class="trainer-ctl">
+      <div><label>Тип задания</label>
+        <select id="tr-type">
+          <option value="mix">Все типы</option>
+          ${TYPES.map(t=>`<option value="${t.id}">${t.name}</option>`).join('')}
+        </select>
+      </div>
+      <button class="act" onclick="newTask()">Новая задача</button>
+      <button class="act sec" onclick="questNext()">🎯 Задача дня</button>
+    </div>
+    <div class="streak" id="tr-streak"></div>
+    <div id="tr-box"></div>
+  </div>`;
+  goldenMsg='';renderStreakLine();
+}
+function validTask(t){
+  return t&&t.o&&t.o.length>=2&&new Set(t.o).size===t.o.length&&t.c>=0&&t.c<t.o.length&&t.q&&t.e;
+}
+function genSafe(type,rng){
+  for(let i=0;i<30;i++){
+    const t=TYPES.find(x=>x.id===type).gen(rng||Math.random);
+    if(validTask(t))return t;
+  }
+  return TYPES[0].gen(Math.random);
+}
+window.questNext=function(){
+  const q=questNew();
+  if(q.done>=3){goldenMsg=' ✅ Квест дня уже выполнен! Возвращайтесь завтра.';renderStreakLine();return;}
+  curT=questTask(q.done);
+  curT._type=TYPES.find(t=>t.gen===curT.gen||t.id===curT.id)?curT._type||'mix':'mix';
+  curT._quest=true;
+  curT0=Date.now();
+  renderTask('🎯 Задача дня ('+(q.done+1)+' из 3)');
+};
+window.newTask=function(){
+  if(!hasAccess()){
+    if(demoLeft<=0){$('#tr-box').innerHTML=payBlock('tr');return;}
+    demoLeft--;try{localStorage.setItem('exam-demo-used',String(DEMO_TRAINER-demoLeft));}catch(e){}
+  }
+  const type=$('#tr-type').value;
+  const tid=type==='mix'?rnd(TYPES).id:type;
+  curT=genSafe(tid);
+  curT._type=tid;curT._quest=false;
+  curT0=Date.now();
+  renderTask();
+};
+function renderTask(prefix){
+  goldenMsg='';
+  const gold=!hasAccess()?false:(Math.random()<0.2&&streak>=3);
+  curT._gold=gold;
+  $('#tr-box').innerHTML=`
+    <div class="q" style="margin-top:10px${gold?' golden':''}" data-c="${curT.c}">
+      ${prefix?`<div class="muted">${prefix}</div>`:''}
+      ${curT.svg||''}
+      <p class="qq">${gold?'⭐ Золотая задача — серия ×2! ':''}${curT.q}</p>
+      ${curT.o.map(o=>`<button type="button" class="opt" onclick="pickOpt(this)">${esc(o)}</button>`).join('')}
+      <div class="expl">💡 ${curT.e}</div>
+      <div id="tr-verdict" style="display:none;margin-top:10px;font-weight:600"></div>
+    </div>
+    <button class="act" onclick="checkTask()">Проверить</button>
+    <button class="act sec" onclick="newTask()">Дальше →</button>`;
+  renderStreakLine();
+}
+window.checkTask=function(){
+  const box=$('#tr-box .q');
+  if(box.classList.contains('locked'))return;
+  box.classList.add('locked');
+  const c=+box.dataset.c,opts=box.querySelectorAll('.opt'),sel=box.querySelector('.opt.sel');
+  opts[c].classList.add('correct');
+  const v=$('#tr-verdict');
+  const ms=Date.now()-curT0;
+  const ok=sel&&+[...opts].indexOf(sel)===c;
+  const tooFast=ok&&ms<800;
+  if(sel){
+    if(ok&&!tooFast){
+      streak+=curT._gold?Math.max(2,streak):1;
+      if(curT._gold)unlockBadge('gold1','Первая золотая задача ⭐');
+      if(streak>best){best=streak;save(K.best,best);}
+      if(streak>=10)unlockBadge('s10','Серия 10 в сессии 🔥');
+      v.style.color='var(--green)';v.textContent=(curT._gold?'⭐ Золотая! Серия удвоена. ':'✓ Верно!')+` (${(ms/1000).toFixed(1)} с)`;
+      record(curT._type,true,ms);
+    }else if(ok&&tooFast){
+      fastOk++;
+      v.style.color='var(--yellow)';v.textContent='⚠ Верно, но слишком быстро — в серию не идёт (анти-чит).';
+      record(curT._type,true,ms);
+    }else{
+      streak=0;fastOk=0;
+      v.style.color='var(--red)';
+      v.textContent='✗ Мимо — читайте решение. Серия сброшена (ошибки и есть обучение).';
+      record(curT._type,false,ms);
+    }
+  }else{
+    v.style.color='var(--red)';v.textContent='Выберите вариант — или жмите «Дальше».';
+  }
+  box.querySelector('.expl').classList.add('show');
+  renderStreakLine();
+};
+
+/* ====== МИНИ-ЭКЗАМЕН ====== */
+let examTasks=null,examTimer=null,examTimeLeft=0,examTimed=true;
+const EXAM_SECONDS=7*60;
+function renderExam(){
+  if(!hasAccess()){$('#view-exam').innerHTML=payBlock('ex');return;}
+  examTimed=true;
+  const shuffled=[...TYPES].sort(()=>Math.random()-0.5);
+  examTasks=[shuffled[0],shuffled[1],shuffled[2],shuffled[3],shuffled[4]].map(t=>{const q=genSafe(t.id);q._type=t.id;q._w=t.w;return q;});
+  $('#view-exam').innerHTML=`
+  <div class="card">
+    <h3>🎓 Мини-экзамен: 5 задач с новыми числами</h3>
+    <div class="muted">Задачи генерируются заново — это проверка навыка. Порог зачёта — 4 из 5.
+    <label style="margin-left:8px"><input type="checkbox" id="exam-timed" checked onchange="examTimed=this.checked"> ⏱ Таймер 7:00 (верифицированный замер — весит больше в готовности)</label></div>
+    <div class="timer" id="exam-clock" style="margin:8px 0"></div>
+  </div>
+  <div class="card"><div id="quiz-exam">${examTasks.map((q,i)=>quizBlock(q,i)).join('')}</div>
+    <div class="score" id="score-exam"></div>
+    <div class="big-res" id="exam-res" aria-live="polite"></div>
+    <button class="act" onclick="runExam()">Проверить</button>
+    <button class="act sec" onclick="renderExam()">Новый вариант</button>
+  </div>`;
+  examTasks.forEach(q=>q._t0=Date.now());
+  startExamTimer();
+}
+function startExamTimer(){
+  clearInterval(examTimer);
+  if(!examTimed){$('#exam-clock').textContent='⏱ Свободный режим (без таймера)';return;}
+  examTimeLeft=EXAM_SECONDS;
+  const tick=()=>{
+    if(examTimeLeft<=0){clearInterval(examTimer);$('#exam-clock').textContent='⏱ Время вышло!';runExam(true);return;}
+    const m=Math.floor(examTimeLeft/60),s=examTimeLeft%60;
+    const el=$('#exam-clock');
+    el.textContent=`⏱ ${m}:${String(s).padStart(2,'0')}`;
+    el.className='timer'+(examTimeLeft<60?' warn':'');
+    examTimeLeft--;
+  };
+  tick();examTimer=setInterval(tick,1000);
+}
+window.runExam=function(auto){
+  clearInterval(examTimer);
+  const {right,avgMs}=checkAll('#quiz-exam',examTasks);
+  const verified=examTimed&&avgMs>=2000;
+  const pass=right>=4;
+  scoreMsg($('#score-exam'),right,5,4,pass,(verified?'⏱ Верифицированный замер (с таймером, осмысленное время). ':'Свободный режим — для готовности считается с меньшим весом. ')+(pass?'Тема движется к закрытию!':'Нужно 4 из 5 — разборы выше и Тренажёр помогут.'));
+  const weighted=examTasks.reduce((a,q)=>a+q._w,0);
+  const got=examTasks.reduce((a,q,i)=>{
+    const el=document.querySelectorAll('#quiz-exam .q')[i];
+    const c=+el.dataset.c,opts=el.querySelectorAll('.opt'),sel=el.querySelector('.opt.sel');
+    return a+(sel&&+[...opts].indexOf(sel)===c?q._w:0);
+  },0);
+  const pct=Math.round(got/weighted*100);
+  $('#exam-res').textContent=`Готовность по этому варианту: ${pct}%${verified?' ⏱':''}${auto?' (время вышло)':''}`;
+  const prev=examBest;
+  const entry={pct,verified,date:todayStr()};
+  if(!prev||pct>prev.pct||(pct===prev.pct&&verified&&!prev.verified))examBest=entry;
+  save(K.exam,examBest);
+  if(pass&&verified)unlockBadge('exam80','Мини-экзамен с таймером сдан 🎓');
+};
+
+/* ====== ПРОГРЕСС + ВАЛИДАЦИЯ + ОТЧЁТ ====== */
+function confWord(totalN){return totalN>=30?'высокая':totalN>=15?'средняя':'низкая';}
+function readiness(){
+  let wSum=0,got=0,used=0;
+  TYPES.forEach(t=>{
+    const s=stats[t.id];
+    if(s&&s.n>=3){wSum+=t.w;got+=t.w*(s.ok/s.n);used++;}
+  });
+  return wSum>0?{pct:Math.round(got/wSum*100),used}:{pct:null,used:0};
+}
+function renderProgress(){
+  const r=readiness();
+  const conf=confWord(TYPES.reduce((a,t)=>a+((stats[t.id]&&stats[t.id].n)||0),0));
+  const rk=rankNext();
+  $('#view-progress').innerHTML=`
+  <div class="card">
+    <h3>📊 Готовность к орфографии/грамматике (взвешенная, валидированная)</h3>
+    ${r.pct!==null?`<div class="big-res">${r.pct}% <span class="rank">${rank()}</span></div>
+    <div class="muted">Уверенность оценки: <b>${conf}</b> (по числу решённых задач). Готовность = взвешенная решаемость типов по их весу на экзамене. Это вероятность решить тип, а не гарантированный балл. Экзамен-режим ⏱ весит больше свободного режима.</div>
+    ${examBest?`<div class="callout ${examBest.verified?'green':''}">Лучший мини-экзамен: <b>${examBest.pct}%</b>${examBest.verified?' ⏱ верифицированный':' (свободный режим)'} — ${examBest.date}</div>`:''}
+    ${rk?`<div class="muted" style="margin-top:6px">До ранга «${rk.name}»: ещё ${rk.need} верных задач.</div>`:''}
+    <div class="muted" style="margin-top:6px">Бейджи: ${badges.length?badges.length+' шт. — в тренажёре и на экзамене':'пока нет — они появятся за серии, квесты и экзамены'}</div>`
+    :`<div class="muted">Данных пока мало: решите хотя бы 3 задачи в Тренажёре (любых типов) — и здесь появится взвешенная готовность.</div>`}
+  </div>
+  <div class="card">
+    <h3>По типам заданий</h3>
+    <table>
+      <tr><th>Тип</th><th>Решено</th><th>Верно</th><th>Решаемость</th><th>Уверенность</th></tr>
+      ${TYPES.map(t=>{
+        const s=stats[t.id];
+        if(!s||s.n===0)return `<tr><td>${t.name}</td><td>0</td><td>—</td><td class="muted">не решали</td><td class="muted">—</td></tr>`;
+        const pct=Math.round(s.ok/s.n*100);
+        const cls=pct>=80?'ok':pct>=60?'warn':'bad';
+        const conf=s.n>=15?'высокая':s.n>=5?'средняя':'мало данных';
+        const pctCell=s.n>=5?`<div class="bar"><i class="${cls}" style="width:${pct}%"></i></div>${pct}%`:'— мало данных';
+        return `<tr><td>${t.name}</td><td>${s.n}</td><td>${s.ok}</td><td style="min-width:130px">${pctCell}</td><td>${conf}</td></tr>`;
+      }).join('')}
+    </table>
+    <div class="callout gold">Пороги: <b>&lt;60%</b> — тип не готов, <b>60–80%</b> — зона риска, <b>80%+</b> — тип закрыт. Тренируйте в Тренажёре красные типы — вес красных типов в готовности выше.</div>
+  </div>
+  <div class="card">
+    <h3>💼 Отчёт для репетитора</h3>
+    <div class="muted">Скопируйте и отправьте репетитору: карта ловушек, верифицированные данные, уверенность оценки.</div>
+    <textarea id="tutor-report" readonly></textarea>
+    <button class="act" onclick="copyReport()">Скопировать</button>
+    <button class="act sec" onclick="buildReport()">Обновить</button>
+  </div>`;
+  buildReport();
+}
+function buildReport(){
+  const r=readiness();
+  const conf=confWord(TYPES.reduce((a,t)=>a+((stats[t.id]&&stats[t.id].n)||0),0));
+  let txt=`ФЕКО ЕГЭ русский — отчёт ученика (${new Date().toLocaleDateString('ru-RU')})\n`;
+  txt+=`Ранг: ${rank()} · решено верных: ${totalOk()} · серия дней: ${days.streak} · рекорд сессии: ${best}\n`;
+  if(r.pct!==null)txt+=`Взвешенная готовность: ${r.pct}% (уверенность: ${conf}; ${r.used} типов с данными)\n`;
+  if(examBest)txt+=`Лучший мини-экзамен: ${examBest.pct}%${examBest.verified?' (⏱ верифицированный, с таймером)':''}\n`;
+  txt+=`\nПо типам:\n`;
+  TYPES.forEach(t=>{
+    const s=stats[t.id];
+    if(!s||!s.n)return;
+    const pct=Math.round(s.ok/s.n*100);
+    const avgT=s.times.length?Math.round(s.times.reduce((a,b)=>a+b,0)/s.times.length):null;
+    txt+=`- ${t.name}: ${s.ok}/${s.n} (${pct}%)${avgT?`, среднее время ${avgT/1000} с`:''}${s.n<5?', данных мало':''}${pct<60&&s.n>=3?' ← ЛОВУШКА: '+t.trap:''}\n`;
+  });
+  txt+=`\nВремя на ответы записывается — отчёт трудно подделать. Пороги: <60% не готов, 60–80% риск, 80%+ закрыт.\n`;
+  const ta=document.getElementById('tutor-report');
+  if(ta)ta.value=txt;
+}
+window.copyReport=function(){
+  const ta=document.getElementById('tutor-report');
+  if(!ta)return;
+  ta.select();
+  try{document.execCommand('copy');}catch(e){}
+  if(navigator.clipboard)navigator.clipboard.writeText(ta.value).catch(()=>{});
+  alert('Отчёт скопирован — вставьте в сообщение репетитору.');
+};
+
+/* ====== ВКЛАДКИ ====== */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    t.classList.add('active');
+    $('#view-'+t.dataset.view).classList.add('active');
+    window.scrollTo(0,0);
+    if(t.dataset.view==='progress')renderProgress();
+  });
+});
+renderDiag();renderTheory();renderTrainer();renderExam();headerBadges();
+</script>
+</body>
+</html>
